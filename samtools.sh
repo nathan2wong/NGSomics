@@ -13,5 +13,4 @@ samtools mpileup -f reference.fna aligned.sorted.bam | java -jar VarScan.v2.3.7.
 freebayes -f reference.fna aligned.sorted.bam > variants3.vcf #Freebayes
 echo "333"
 
-
-#./samtools tview variants.vcf #view output
+vcftools --vcf variants.vcf --gzdiff variants2.vcf --diff-site #final test
