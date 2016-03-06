@@ -9,7 +9,7 @@ echo "222"
 samtools mpileup -g -f reference.fna aligned.sorted.bam > variants.bcf
 echo "test"
 bcftools view variants.bcf > variants.vcf #BCF to VCF File 
-samtools mpileup -f reference.fna aligned.sorted.bam | java -jar VarScan.v2.3.7.jar mpileup2snp > variants2.vcf #Varscan
+samtools mpileup -f reference.fna aligned.sorted.bam | java -jar varscan.jar mpileup2snp > variants2.vcf #Varscan
 freebayes -f reference.fna aligned.sorted.bam > variants3.vcf #Freebayes
 echo "333"
 
