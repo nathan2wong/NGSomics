@@ -1,0 +1,1 @@
+docker run -w /home/dbdata/trial1/ -ti -v /home/ngsomics:/home/dbdata nathan2wong/ngsomics sh execute.sh
