@@ -31,7 +31,75 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Update Later...</p>
+        <p> NGSomics (Next Generation Sequencing Genomics): An Intuitive, Parallelized NGS Pipeline for Analysis and Drug Correlation
+Question:
+Can the tedious process of NGS (Next Generation Sequencing) be reduced to a singular, simple cloud platform which chains multiple tools together in parallel?
+Goal:
+To make the process of using multiple NGS tools more efficient and accessible (described in design criteria).
+Hypothesis:
+Chaining multiple NGS tools together on a cloud platform will increase both portability and efficiency of data processing through parallelization.
+Materials:
+1) E ntire genome analysis toolkit pipeline (GATK/Churchill/Platypus/Freebayes): confidently sequence/map necessary DNA data for (1) variant calling (2) differential gene expression [TopHat/Cuffdiff].
+2) D NA microarray with analysis platform ( Genechip/ChiPSeq): Interpret raw DNA to convert to BAM files for later analysis.
+3) C loud Tools: T he freely available Docker Toolbox allows for cross­platform connection and sync between containers.
+Methods:
+Data Cleanup: The raw data generated needs to be better formatted for variant calling analysis.
+Raw reads: After the DNA microarray has been scanned by the processing machine,
+b i l l i o n s o f r e a d s ( s t r i n g s o f D N A t e x t ) a r e p r o d u c e d . M  a p t o R e f e r e n c e :   T h e r a w r e a d s f r o m t h e patient are then compared to a reference genome database (Genome in a Bottle Consortium),
+w h i c h h a s b e e n s t a n d a r d i z e d a n d t e s t e d u n i v e r s a l l y . M  a r k D u p l i c a t e s / S o r t :   W h e n t h e r e a d s a r e mapped against the reference, copies of reads are also sequenced in the process. These additional reads are not relevant and are marked separately so that they can be ignored later on in the process. I ndel Realignment: Since the algorithms used to map the reads are prone to error, such as an indel (deletion/addition of bases in DNA) getting mapped incorrectly with bases and would appear as evidence for a SNP (change of one base in DNA) instead, this realignment process finds the most reliable location of the reads. First, the intervals to be realigned are identified, and then the sequence with the highest confidence level (based on various statistical tests) is used. B ase Recalibration: Because the algorithms used to identify variants rely so much on the accuracy (based on quality scores) of each base in the sequence, base quality scores (that is a statistical estimate of error per base) are recalibrated and checked. Due to possible over or
+ underestimation of the scores produced, machine learning is utilized in order to account for these errors and give more accurate results.
+V a r i a n t D i s c o v e r y : T h e “ c l e a n e d ­ u p ” d a t a i s u s e d t o i d e n t i f y v a r i a n t s , t h r o u g h a b a l a n c e between sensitivity and specificity (minimizing false negatives and false positives respectively).
+V a r i a n t C a l l i n g : ( A h a p l o t y p e i s a s e t o f D N A v a r i a t i o n s / p o l y m o r p h i s m s t h a t a r e r e l a t e d and found on the same chromosome) The HaplotypeCaller determines which areas in the genome are likely to have a SNP or indel and changes the BAM file (binary sequence alignment data) into a VCF/gVCF file (variant call format) for later analysis. [The genomic VCF has more information, records for all the sites whether a variant was present or not, whereas a normal VCF file has only information for the site where a variant was detected.] J oint Genotyping: Running the GenotypeGVCFs on the VCFs produced in the previous step creates a set of raw SNP and indel calls that enables a more sensitive (being able to perceive a variant more readily) detection o f v a r i a n t s . V a r i a n t R e c a l i b r a t i o n : I n o r d e r t o a s s i g n a q u a l i t y s c o r e t o e a c h v a r i a n t c a l l , machine learning is again utilized to give the most accurate and reliable result. The variant quality score is then used to winnow the raw set of variant calls in a way that best suits the desired level of quality, allowing for a more specific (being able to perceive a variant more carefully) analysis.
+Evaluation: This last optional step is done to refine the genotype calls and evaluate the quality of the calls to standardized resources. This step, however, is instrumental in the machine learning algorithms.
+Detailed Procedure: 
+1) Obtain DNA data via microarray analysis or online databases if applicable.
+2) Using genome analysis pipelines, map and sequence the experimental genome with the reference genome as located in online databases.
+3) Use Docker Toolbox to setup and connect multiple disparate analysis tools.
+4) Setup Docker parallelization to allow for efficient and non­linear use of chained tools.
+5) Connect data input and output from each tool to the next and display results intuitively to user. 6) Analyze pipeline output and link phenotype to certain drug in database.
+Methods:
+1 ) N e x t G e n e r a t i o n S e q u e n c i n g : U s e c u t t i n g ­ e d g e b i o i n f o r m a t i c s m e t h o d s t o s e n s i t i v e l y a n d specifically map genome while calling possible DNA base pair variants and gene expression differences to reliably determine proteins transcribed.
+2) P arallelization: Either use open­source software or create own method of running multiple tools in parallel.
+3 ) F l e x i b i l i t y : A l l o w u s e r s t o s w a p c e r t a i n t o o l s w i t h o t h e r o p e n ­ s o u r c e t o o l s b y l o o s e l y connecting each container and allowing for easy swapping.
+4) U nified Variant Calling: S eek out indels (deletion/addition) and SNPs (changes in single base pair) and structural changes (large and very affecting)
+ 5) D rug Correlation: C reation of online drug database through a NoSQL (Mongo) database which allows for quick access and query.
+Design Criteria (Software Criteria):
+Correctness: R efer to DNA Variation Criteria to determine the accuracy of this program. Efficiency:
+­ Using Docker Starter Edition allows up to 10 Docker Engines for our servers, each of which is capable of compiling and running the applications on our server
+­ Parallel Efficiency of using all 10 of these engines can be calculated as S/(p*T(p)) where S represents the execution time of the program (linearly), p is the number of engines use simultaneously, and T(p) is the execution time when using p engines
+Understandability and Maintainability:
+­ Each container can be stopped, started, and saved at any time. This allows for easy image duplication and scaling up with one command, so 1 image setup can be easily upgraded to several.
+­ Each container image is listed separately in the setup so that an image can replace any other image in the pipeline at any time
+­ Dockerfiles, which hold container configuration, are automatically saved on Docker Hub, an online repository of Docker software, and can be duplicated or distributed freely
+­ The NoSQL database is easily accessible and can be updated in a few steps from any browser
+Robustness:
+­ Docker’s design allows for easy swapping of containers, meaning that different software tools which have the same purpose can be interchanged to allow for robustness of input
+­ The drug database is compiled and scraped from various online sources, and a drug match can be determined using multiple factors ­ if some data is innacurate, other data can be used as a substitute in determining a drug match
+Reusability:
+­ Docker containers, by nature, can be downloaded and distributed with ease. Docker Hub allows for public distribution of image configurations. Thus, this can be developed and continued easily by future efforts.
+­ The drug matching criteria can use user feedback in improving future drug matching results. Based on a user feedback system, the accuracy of the drug match can be determined and can be improved over time. This database and its metadata can also be open­sourced to allow for future development.
+DNA Variation Criteria:
+ Genome Analysis Reference Material: Standardized genome reference material compiled from various sequencing technologies to set a highly accurate benchmark for variant calling software comparison.
+G C A T : P a r t n e r e d w i t h G I A B t o s e r v e a s r e f e r e n c e f o r s e q u e n c i n g d a t a . A l i g n m e n t T e s t : Compare popular sequencing aligners with different data sets. How alignment tools perform per different sequencing read lengths. Variant Calling Test: Compare combinations of variant calls with different data sets. How different aligners and variant callers perform against each other. Benefits: Allows for the seamless communication of the technicalities of software comparison to be easily communicated on one platform.
+GIAB ( Genome in a bottle) Goals: Hosted by NIST to develop the infrastructure for reference standards, methods, and data to help translate the human genome sequencing into clinical practice. Benefits: Allows for an universally agreed source of reference with which all genome research can be based.
+Test Case: We intend to use Garvan Exome Data NA12878 as one test case. Based on the following criteria, we will use GIAB data sets to determine whether the results are sufficiently accurate.
+True Positives (TP) Called variants with a corresponding position in the GIAB VCF file False Positives (FP) Called variants without a corresponding position in the VCF file
+True Negatives (TN) Called reference bases without a corresponding position in the VCF file False Negatives (FN) Called reference bases with a corresponding position in the VCF file Specificity: True positive rate: ratio of correctly identified variants to total known variants in reference set. Higher sensitivity means it is more likely for a variant in the sample will be identified by the program. T P / (TP + FN)
+Sensitivity: True negative rate: ratio of non­variant calls to the total number of positions in the reference set that are known to be homozygous with the reference sequence. Inversely related to the number of false positives. T N / (TN + FP)
+False Discovery Rate: Ratio of false positives to all variant calls made by the software. The
+F D R v a l u e i n t e r p r e t s h o w m a n y v a r i a n t s a r e l i k e l y t o b e f a l s e p o s i t i v e s . F P / ( T P + F P )
+Our software will be considered accurate if its specificity, sensitivity, and FDR rank as good as o r a b o v e t h e G  e n e i o u s 8 . 1 ’ s v a r i a n t c a l l i n g p r o g r a m .   A t a b l e f r o m (h ttp://www.dnastar.com/skins/skin_1/pdf/SeqMan­NGen­comparison­studies.pdf) is provided below to define the guideline to determine the accuracy of this project.
+ 
+  References:
+1) Understand the architecture. (n.d.). Retrieved October 1, 2015, from https://docs.docker.com/introduction/understanding­docker/
+2) Parse. (n.d.). Retrieved October 13, 2015, from https://parse.com/docs
+3) Next­Generation Sequencing (NGS). (n.d.). Retrieved October 13, 2015, from http://www.illumina.com/technology/next­generation­sequencing.html
+4) Inflammatory Bowel Disease ­ Crohn's Disease . (n.d.). Retrieved September 30, 2015, from http://www.agsaflorida.com/Home/PatientEducationLibrary/tabid/18426/ctl/View/mid/33464/De fault.aspx?ContentPubID=325
+5) GATK Best Practices Recommended workflows for variant discovery analysis with GATK. (n.d.). Retrieved September 10, 2015, from https://www.broadinstitute.org/gatk/guide/best­practices?bpm=DNAseq
+6) A comparison of methods for differential expression analysis of RNA­seq data. (n.d.). Retrieved October 7, 2015, from http://www.biomedcentral.com/1471­2105/14/91
+7) (n.d.). Retrieved September 2, 2015, from http://biorxiv.org/content/biorxiv/early/2014/05/28/005611.full.pdf
+8) https://www.dnastar.com/blog/next­gen­sequencing/how­accurate­is­your­variant­caller/
+</p>
       </section>
     </div>
 
