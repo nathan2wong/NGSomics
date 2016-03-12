@@ -2,33 +2,41 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/spin.min.js"></script>
     <script>
+        var opts = {
+          lines: 7 // The number of lines to draw
+        , length: 10 // The length of each line
+        , width: 8 // The line thickness
+        , radius: 42 // The radius of the inner circle
+        , scale: 1 // Scales overall size of the spinner
+        , corners: 0 // Corner roundness (0..1)
+        , color: '#000' // #rgb or #rrggbb or array of colors
+        , opacity: 0.25 // Opacity of the lines
+        , rotate: 0 // The rotation offset
+        , direction: 1 // 1: clockwise, -1: counterclockwise
+        , speed: 2 // Rounds per second
+        , trail: 50 // Afterglow percentage
+        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+        , className: 'spinner' // The CSS class to assign to the spinner
+        , top: '50%' // Top position relative to parent
+        , left: '50%' // Left position relative to parent
+        , shadow: false // Whether to render a shadow
+        , hwaccel: false // Whether to use hardware acceleration
+        , position: 'absolute' // Element positioning
+        };
+        
         $(document).ready(function () {
-            $("#run2").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "http://159.203.243.231:8081/run_and_print",
-                    success: function (data) {
-                        alert("nice: success");
-                        console.log(data);
-                        $("#process_display").html(data);
-                    },
-                    error: function (data) {
-                        alert("nice: error");
-                        console.log(data);
-                    }
-                });
-            });
-            $("#run22").click(function () {
-                $("#process_display").html("");
-            });
-            
+              
             $("#run1").click(function () {
+                var spinner = new Spinner(opts).spin(document.getElementById('spin1'));
                 $.ajax({
                     type: "POST",
                     url: "http://159.203.243.231:8081/print_sam",
                     success: function (data) {
-                        alert("nice: success");
+                        //alert("nice: success");
+                        spinner.stop();
                         console.log(data);
                         $("#sam_display").html(data);
                     },
@@ -42,6 +50,27 @@
                 $("#sam_display").html("");
             });
             
+            $("#run2").click(function () {
+                var spinner = new Spinner(opts).spin(document.getElementById('spin2'));
+                $.ajax({
+                    type: "POST",
+                    url: "http://159.203.243.231:8081/run_and_print",
+                    success: function (data) {
+                        //alert("nice: success");
+                        spinner.stop();
+                        console.log(data);
+                        $("#process_display").html(data);
+                    },
+                    error: function (data) {
+                        alert("nice: error");
+                        console.log(data);
+                    }
+                });
+            });
+            $("#run22").click(function () {
+                $("#process_display").html("");
+            });
+         
         });
     </script>
 </head>
@@ -49,10 +78,12 @@
 <body>
     <button id="run1">Print SAM File</button>
     <button id="run11">Clear SAM File Output</button>
+    <div id="spin1"></div>
     <div id="sam_display"></div>
 
     <button id="run2">Run and Output Process</button>
     <button id="run22">Clear Process Output</button>
+    <div id="spin2"></div>
     <div id="process_display"></div>
 </body>
 
