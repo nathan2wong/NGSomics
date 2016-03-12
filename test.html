@@ -4,29 +4,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#fdsa").click(function () {
+            $("#run2").click(function () {
                 $.ajax({
                     type: "POST",
-                    url: "http://159.203.243.231:8081/docker_post",
+                    url: "http://159.203.243.231:8081/run_and_print",
                     success: function (data) {
                         alert("nice: success");
                         console.log(data);
-                        $("#post_display").html(data);
+                        $("#process_display").html(data);
                     },
                     error: function (data) {
                         alert("nice: error");
                         console.log(data);
                     }
                 });
-            })
+            });
+            $("#run1").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "http://159.203.243.231:8081/print_sam",
+                    success: function (data) {
+                        alert("nice: success");
+                        console.log(data);
+                        $("#sam_display").html(data);
+                    },
+                    error: function (data) {
+                        alert("nice: error");
+                        console.log(data);
+                    }
+                });
+            });
         });
     </script>
 </head>
 
 <body>
+    <button id="run1">Print SAM File</button>
+    <div id="sam_display"></div>
 
-    <button id="fdsa">Test</button>
-    <div id="post_display"></div>
+    <button id="run2">Run and Output Process</button>
+    <div id="process_display"></div>
 </body>
 
 </html>
