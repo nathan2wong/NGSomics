@@ -76,6 +76,16 @@
 </head>
 
 <body>
+    <form ref='uploadForm' 
+			id='uploadForm' 
+			action='http://159.203.243.231:8081/upload_sam' 
+			method='post' 
+			encType="multipart/form-data">
+				<input type="file" name="sampleFile" />
+				<input type='submit' value='Upload!' />
+    </form>	
+    
+    
     <button id="run1">Print SAM File</button>
     <button id="run11">Clear SAM File Output</button>
     <div id="spin1"></div>
