@@ -19,6 +19,10 @@
                     }
                 });
             });
+            $("#run22").click(function () {
+                $("#process_display").html("");
+            });
+            
             $("#run1").click(function () {
                 $.ajax({
                     type: "POST",
@@ -34,15 +38,21 @@
                     }
                 });
             });
+            $("#run11").click(function () {
+                $("#sam_display").html("");
+            });
+            
         });
     </script>
 </head>
 
 <body>
     <button id="run1">Print SAM File</button>
+    <button id="run11">Clear SAM File Output</button>
     <div id="sam_display"></div>
 
     <button id="run2">Run and Output Process</button>
+    <button id="run22">Run and Output Process</button>
     <div id="process_display"></div>
 </body>
 
