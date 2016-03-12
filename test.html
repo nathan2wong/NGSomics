@@ -11,6 +11,7 @@
                     success: function (data) {
                         alert("nice: success")
                         console.log(data);
+                        $("#post_display").val(data);
                     },
                     error: function (data) {
                         alert("nice: error")
@@ -25,11 +26,7 @@
 <body>
 
     <button id="fdsa">Test</button>
-    <!--
-        <form action = "" method = "post">
-            <input type="submit" name="post" value="post" />
-        </form>
--->
+    <div id="post_display"></div>
 </body>
 
 </html>
