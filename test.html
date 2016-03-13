@@ -45,8 +45,8 @@
 //            });
             $('#uploadForm').ajaxForm(function(responseText, statusText, xhr, formElement) {
                 var obj = (responseText);
-                ("#sam_display").html(obj.sam_output);
-                ("#process_display").html(obj.process_output);
+                $("#sam_display").html(obj.sam_output);
+                $("#process_display").html(obj.process_output);
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
