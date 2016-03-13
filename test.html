@@ -47,13 +47,23 @@
                 spinner = new Spinner(opts).spin(document.getElementById('spin1'));
             });
             var vcf_out = "";
+            var variants_out = "";
             $("#run21").click(function(){
                 $("#process_display").html(vcf_out); 
             });
-            $('#uploadForm').ajaxForm(function(responseText, statusText, xhr, formElement) {
-                var obj = (responseText);
+            $("#run22").click(function () {
+                $("#process_display").html("");
+            });
+            $("#run31").click(function(){
+                $("#variants_display").html(variants_out); 
+            });
+            $("#run32").click(function () {
+                $("#variants_display").html("");
+            });
+            $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
                 $("#sam_display").html(obj.sam_output);
                 vcf_out = obj.process_output;
+                variants_out = obj.variants_output;
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
@@ -74,18 +84,20 @@
 				<input type='submit' value='Upload!' />
     </form>    
     
-<!--    <button id="run1">Print SAM File</button>-->
     <h1>SAM Output</h1>
     <button id="run11">Clear SAM File Output</button>
     <div id="spin1"></div>
     <div id="sam_display"></div>
     
-<!--    <button id="run2">Run2 2and Output Process</button>-->
     <h1>VCF File Display (1)</h1>
     <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
-    <div id="spin2"></div>
     <div id="process_display"></div>
+    
+    <h1>Final Variants Calls Display</h1>
+    <button id="run31">Show Variants File</button>
+    <button id="run32">Clear Variants Output</button>
+    <div id="variants_display"></div>
     
     
 </body>
