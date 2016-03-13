@@ -46,10 +46,14 @@
             $("#uploadForm").submit(function(event){
                 spinner = new Spinner(opts).spin(document.getElementById('spin1'));
             });
+            var vcf_out = "";
+            $("#run21").click(function(){
+                $("#process_display").html(vcf_out); 
+            });
             $('#uploadForm').ajaxForm(function(responseText, statusText, xhr, formElement) {
                 var obj = (responseText);
                 $("#sam_display").html(obj.sam_output);
-                $("#process_display").html(obj.process_output);
+                vcf_out = obj.process_output;
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
@@ -77,13 +81,13 @@
     <div id="sam_display"></div>
     
 <!--    <button id="run2">Run2 2and Output Process</button>-->
-
-    
-    
-    <h1>Process Output</h1>
+    <h1>VCF File Display (1)</h1>
+    <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
     <div id="spin2"></div>
     <div id="process_display"></div>
+    
+    
 </body>
 
 </html>
