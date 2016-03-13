@@ -46,8 +46,9 @@
             $("#uploadForm").submit(function(event){
                 spinner = new Spinner(opts).spin(document.getElementById('spin1'));
             });
-            var vcf_out = "";
-            var variants_out = "";
+            var vcf_out = "",
+                variants_out = "",
+                drug_out = "";
             $("#run21").click(function(){
                 $("#process_display").html(vcf_out); 
             });
@@ -59,6 +60,12 @@
             });
             $("#run32").click(function () {
                 $("#variants_display").html("");
+            });
+            $("#run41").click(function(){
+                $("#drug_display").html(drug_out); 
+            });
+            $("#run42").click(function () {
+                $("#drug_display").html("");
             });
             $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
                 $("#sam_display").html(obj.sam_output);
@@ -99,6 +106,10 @@
     <button id="run22">Clear Process Output</button>
     <div id="process_display"></div>
 
+    <h1>Drug Correlation Display (1)</h1>
+    <button id="run41">Show Drug File</button>
+    <button id="run42">Clear Drug Output</button>
+    <div id="drug_display"></div>
     
     
 </body>
