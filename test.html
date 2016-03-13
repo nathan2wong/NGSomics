@@ -3,6 +3,8 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="spin.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+
     <script>
         var opts = {
           lines: 7 // The number of lines to draw
@@ -70,7 +72,9 @@
             $("#run22").click(function () {
                 $("#process_display").html("");
             });
-         
+            $('#uploadForm').ajaxForm(function() { 
+                alert("Thank you for your comment!"); 
+            }); 
         });
     </script>
 </head>
@@ -83,8 +87,7 @@
 			encType="multipart/form-data">
 				<input type="file" name="sampleFile" />
 				<input type='submit' value='Upload!' />
-    </form>	
-    
+    </form>    
     
     <button id="run1">Print SAM File</button>
     <button id="run11">Clear SAM File Output</button>
