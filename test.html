@@ -43,9 +43,9 @@
 //            $('#uploadForm').beforeSubmit(function(arr, form, options){
 //                spinner = new Spinner(opts).spin(document.getElementById('spin1'));
 //            });
-            $("#uploadForm").submit(function(event)){
+            $("#uploadForm").submit(function(event){
                 spinner = new Spinner(opts).spin(document.getElementById('spin1'));
-            };
+            });
             $('#uploadForm').ajaxForm(function(responseText, statusText, xhr, formElement) {
                 var obj = (responseText);
                 $("#sam_display").html(obj.sam_output);
