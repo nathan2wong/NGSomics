@@ -72,7 +72,11 @@
             $("#run22").click(function () {
                 $("#process_display").html("");
             });
-            $('#uploadForm').ajaxForm(function() { 
+            $('#uploadForm').ajaxForm(function(responseText, statusText, xhr, formElement) {
+                console.log(responseText)
+                console.log(statusText)
+                console.log(xhr)
+                console.log(formElement)
                 alert("Thank you for your comment!"); 
             }); 
         });
