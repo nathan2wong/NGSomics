@@ -1,0 +1,10 @@
+body {
+    padding-bottom: 70px; 
+}
+li {
+    float:left;
+    text-decoration: none;
+}
+.function {
+    text-align: center;
+}
