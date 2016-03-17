@@ -19,8 +19,9 @@ li {
 /* Toggle Styles */
 #content {
     position: relative;
-    margin:0;
     text-align:center;
+    margin-top:60px;
+    margin-left:20%;
     
 }
 
@@ -146,7 +147,7 @@ li {
 }
 #upload {
     color:black;
-    padding-bottom:75px;
+    padding-bottom:70px;
 }
 #upload:hover {
     color:red;
