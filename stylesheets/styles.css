@@ -21,8 +21,11 @@ li {
     position: relative;
     text-align:center;
     margin-top:60px;
-    margin-left:20%;
-    
+    margin-left:300px;
+    transition:0.3s;
+}
+#content.toggled {
+    margin-left:0px;
 }
 
 #wrapper {
