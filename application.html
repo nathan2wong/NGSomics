@@ -53,10 +53,10 @@
                 variants_out = "",
                 drug_out = "";
             $("#run21").click(function(){
-                $("#process_display").html(vcf_out); 
+                $("#vcf_display").html(vcf_out); 
             });
             $("#run22").click(function () {
-                $("#process_display").html("");
+                $("#vcf_display").html("");
             });
             $("#run31").click(function(){
                 $("#variants_display").html(variants_out); 
@@ -72,8 +72,10 @@
             });
             $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
                 $("#sam_display").html(obj.sam_output);
-                vcf_out = obj.process_output;
+                vcf_out = obj.vcf_output;
                 variants_out = obj.variants_output;
+                drug_out = obj.drug_output;
+                console.log(obj.links);
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
@@ -106,7 +108,7 @@
         <li class="active"><a href="#">Application</a><span class="sr-only">(current)</span></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download Sample Data <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="http://ngsomics.com/SampleNC_008253.1DataSet.tar">SampleNC_008253.1DataSet</a></li>
+            <li><a href="http://ngsomics.com/SampleNC_008253.tar">SampleNC_008253.1DataSet</a></li>
           </ul>
           </li>
       </ul>
@@ -155,15 +157,15 @@ File Upload
     
     <h1>Final Variants Calls Display</h1>
     <button id="run31">Show Variants File</button>
-    <button id="run32">Clear Variants Output</button>
+    <button id="run32">Clear Variants Output</button>2
     <div id="variants_display"></div>
     
-    <h1>VCF File Display (1)</h1>
+    <h1>VCF File Display</h1>
     <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
-    <div id="process_display"></div>
+    <div id="vcf_display"></div>
 
-    <h1>Drug Correlation Display (1)</h1>
+    <h1>Drug Correlation Display</h1>
     <button id="run41">Show Drug File</button>
     <button id="run42">Clear Drug Output</button>
     <div id="drug_display"></div>
