@@ -1,0 +1,177 @@
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <script src="javascripts/jquery.js"></script>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <script src="javascripts/bootstrap.js"></script>
+    <script src="spin.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <meta name = "description" content="Sample working genomics DNA analysis pipeline of NGSomics. Made by Nathan Wong and Mahesh Murag">
+    <script>
+        var opts = {
+          lines: 7 // The number of lines to draw
+        , length: 10 // The length of each line
+        , width: 8 // The line thickness
+        , radius: 42 // The radius of the inner circle
+        , scale: 1 // Scales overall size of the spinner
+        , corners: 0 // Corner roundness (0..1)
+        , color: '#000' // #rgb or #rrggbb or array of colors
+        , opacity: 0.25 // Opacity of the lines
+        , rotate: 0 // The rotation offset
+        , direction: 1 // 1: clockwise, -1: counterclockwise
+        , speed: 2 // Rounds per second
+        , trail: 50 // Afterglow percentage
+        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+        , className: 'spinner' // The CSS class to assign to the spinner
+        , top: '50%' // Top position relative to parent
+        , left: '50%' // Left position relative to parent
+        , shadow: false // Whether to render a shadow
+        , hwaccel: false // Whether to use hardware acceleration
+        , position: 'absolute' // Element positioning
+        };
+        
+        $(document).ready(function () {
+              
+            
+            $("#run11").click(function () {
+                $("#sam_display").html("");
+            });
+            
+            $("#run22").click(function () {
+                $("#process_display").html("");
+            });
+            var spinner;
+            $("#uploadForm").submit(function(event){
+                spinner = new Spinner(opts).spin(document.getElementById('spin1'));
+            });
+            var vcf_out = "",
+                variants_out = "",
+                drug_out = "";
+            $("#run21").click(function(){
+                $("#process_display").html(vcf_out); 
+            });
+            $("#run22").click(function () {
+                $("#process_display").html("");
+            });
+            $("#run31").click(function(){
+                $("#variants_display").html(variants_out); 
+            });
+            $("#run32").click(function () {
+                $("#variants_display").html("");
+            });
+            $("#run41").click(function(){
+                $("#drug_display").html(drug_out); 
+            });
+            $("#run42").click(function () {
+                $("#drug_display").html("");
+            });
+            
+            $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
+                $("#sam_display").html(obj.sam_output);
+                vcf_out = obj.process_output;
+                variants_out = obj.variants_output;
+<<<<<<< HEAD:test.html
+                drug_out = obj.drug_output;
+                $("#download_sam").attr({"href": "" + obj.links.sam});
+                $("#download_vcf").attr({"href": "" + obj.links.vcf});
+                $("#download_variants").attr({"href": "" + obj.links.variants});
+//                $("#download_drugs").attr({"href": "" + obj.links.drugs});
+=======
+>>>>>>> 06ea3eb8e6a953030714761e479efc306fc6b85f:mobile.html
+                spinner.stop();
+//                console.log(statusText)
+//                console.log(xhr)
+//                console.log(formElement)
+                alert("Upload successful!"); 
+            }); 
+        });
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://ngsomics.com">NGSomics: Mobile Application</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Mobile Site</a><span class="sr-only">(current)</span></li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download Sample Data <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://ngsomics.com/SampleNC_008253.tar">SampleNC_008253 DataSet</a></li>
+          </ul>
+          </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Sign-in</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign Up <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">User Accounts</a></li>
+            <li><a href="#">Sample Reports</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="mailto:nathan2wong@gmail.com">Get in Touch</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="function">
+    <form ref='uploadForm' 
+			id='uploadForm' 
+			action='http://104.131.147.224:8081/file-upload' 
+			method='post' 
+			encType="multipart/form-data">
+			Ref:	<input type="file" name="ref" />
+			Fastq1:	<input type="file" name="fastq1" />
+			Fastq2:	<input type="file" name="fastq2" />
+				<input type='submit' value='Upload!' />
+    </form>  
+    
+    <h1>SAM Output</h1>
+    <button id="run11">Clear SAM File Output</button>
+    <a href="#" target="_blank" id="download_sam">Download SAM File</a>
+    <div id="spin1"></div>
+    <div id="sam_display"></div>
+    
+    <h1>Final Variants Calls Display</h1>
+    <button id="run31">Show Variants File</button>
+    <button id="run32">Clear Variants Output</button>
+    <a href="#" target="_blank" id="download_variants">Download Variants File</a>
+    <div id="variants_display"></div>
+    
+    <h1>VCF File Display (1)</h1>
+    <button id="run21">Show VCF File</button>
+    <button id="run22">Clear Process Output</button>
+<<<<<<< HEAD:test.html
+    <a href="#" target="_blank" id="download_vcf">Download VCF File</a>
+    <div id="vcf_display"></div>
+=======
+    <div id="process_display"></div>
+>>>>>>> 06ea3eb8e6a953030714761e479efc306fc6b85f:mobile.html
+
+    <h1>Drug Correlation Display (1)</h1>
+    <button id="run41">Show Drug File</button>
+    <button id="run42">Clear Drug Output</button>
+    <a href="#" target="_blank" id="download_drugs">Download Drugs File</a>
+    <div id="drug_display"></div>
+    
+    </div>
+</body>
+    <script src="javascripts/appga.js" type="text/javascript"></script>
+
+</html>
