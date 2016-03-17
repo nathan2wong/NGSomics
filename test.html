@@ -53,10 +53,10 @@
                 variants_out = "",
                 drug_out = "";
             $("#run21").click(function(){
-                $("#process_display").html(vcf_out); 
+                $("#vcf_display").html(vcf_out); 
             });
             $("#run22").click(function () {
-                $("#process_display").html("");
+                $("#vcf_display").html("");
             });
             $("#run31").click(function(){
                 $("#variants_display").html(variants_out); 
@@ -72,8 +72,9 @@
             });
             $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
                 $("#sam_display").html(obj.sam_output);
-                vcf_out = obj.process_output;
+                vcf_out = obj.vcf_output;
                 variants_out = obj.variants_output;
+                drug_out = obj.drug_output;
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
@@ -158,7 +159,7 @@
     <h1>VCF File Display (1)</h1>
     <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
-    <div id="process_display"></div>
+    <div id="vcf_display"></div>
 
     <h1>Drug Correlation Display (1)</h1>
     <button id="run41">Show Drug File</button>
