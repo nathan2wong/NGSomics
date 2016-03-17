@@ -75,6 +75,9 @@
                 vcf_out = obj.vcf_output;
                 variants_out = obj.variants_output;
                 drug_out = obj.drug_output;
+                $("#download_sam").attr({"href": "" + obj.links.sam});
+                $("#download_vcf").attr({"href": "" + obj.links.vcf});
+                $("#download_variants").attr({"href": "" + obj.links.variants});
                 console.log(obj.links);
                 spinner.stop();
 //                console.log(statusText)
@@ -162,22 +165,26 @@ File Upload
         <div class = "panel-body"><h1>SAM Output</h1>
         </div>
     <button id="run11">Clear SAM File Output</button>
+        <a href="#" id="download_sam"></a>
     <div id="sam_display"></div>
     
         <div class="panel-body"><h1>VCF File Display</h1></div>
     <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
+        <a href="#" id="download_vcf"></a>
     <div id="vcf_display"></div>
         
         <div class="panel-body"><h1>Final Variants Calls Display</h1></div>
     <button id="run31">Show Variants File</button>
     <button id="run32">Clear Variants Output</button>
+        <a href="#" id="download_variants"></a>
     <div id="variants_display"></div>
     
 
         <div class="panel-body"><h1>Drug Correlation Display</h1></div>
     <button id="run41">Show Drug File</button>
     <button id="run42">Clear Drug Output</button>
+        <a href="#" id="download_drugs"></a>
     <div id="drug_display"></div>
         </div>
     </div>
