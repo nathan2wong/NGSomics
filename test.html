@@ -43,9 +43,6 @@
                 $("#process_display").html("");
             });
             var spinner;
-//            $('#uploadForm').beforeSubmit(function(arr, form, options){
-//                spinner = new Spinner(opts).spin(document.getElementById('spin1'));
-//            });
             $("#uploadForm").submit(function(event){
                 spinner = new Spinner(opts).spin(document.getElementById('spin1'));
             });
@@ -70,12 +67,16 @@
             $("#run42").click(function () {
                 $("#drug_display").html("");
             });
+            
             $('#uploadForm').ajaxForm(function(obj, statusText, xhr, formElement) {
                 $("#sam_display").html(obj.sam_output);
                 vcf_out = obj.vcf_output;
                 variants_out = obj.variants_output;
                 drug_out = obj.drug_output;
-                console.log(obj.links);
+                $("#download_sam").attr({"href": "" + obj.links.sam});
+                $("#download_vcf").attr({"href": "" + obj.links.vcf});
+                $("#download_variants").attr({"href": "" + obj.links.variants});
+//                $("#download_drugs").attr({"href": "" + obj.links.drugs});
                 spinner.stop();
 //                console.log(statusText)
 //                console.log(xhr)
@@ -149,22 +150,26 @@
     
     <h1>SAM Output</h1>
     <button id="run11">Clear SAM File Output</button>
+    <a href="#" target="_blank" id="download_sam">Download SAM File</a>
     <div id="spin1"></div>
     <div id="sam_display"></div>
     
     <h1>Final Variants Calls Display</h1>
     <button id="run31">Show Variants File</button>
     <button id="run32">Clear Variants Output</button>
+    <a href="#" target="_blank" id="download_variants">Download Variants File</a>
     <div id="variants_display"></div>
     
     <h1>VCF File Display</h1>
     <button id="run21">Show VCF File</button>
     <button id="run22">Clear Process Output</button>
+    <a href="#" target="_blank" id="download_vcf">Download VCF File</a>
     <div id="vcf_display"></div>
 
     <h1>Drug Correlation Display</h1>
     <button id="run41">Show Drug File</button>
     <button id="run42">Clear Drug Output</button>
+    <a href="#" target="_blank" id="download_drugs">Download Drugs File</a>
     <div id="drug_display"></div>
     
     </div>
